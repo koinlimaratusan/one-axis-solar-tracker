@@ -11,8 +11,8 @@ int IN1    = 8;              // pin in1
 int IN2   = 9;              // pin in2
 
 // LDR config
-int ldrlt = A0;             // ldr left top
-int ldrrt = A1;             // ldr right top
+int ldrlt = A1;             // ldr left top
+int ldrrt = A0;             // ldr right top
 int ldrld = A2;             // ldr left down
 int ldrrd = A3;             // ldr right down
 int direction;              // Variable to set Rotation (IN1-IN2) of the motor

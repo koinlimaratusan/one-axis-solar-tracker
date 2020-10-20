@@ -108,20 +108,20 @@ void loop() {
   buttonState2 = digitalRead(btnrwd);         // tombol backward
   buttonState3 = digitalRead(btnauto);        // tombol auto/manual
 
-      Serial.print(lt); 
-      Serial.print("+");
-      Serial.print(rt);
-      Serial.print("/2=");
-      Serial.print(avt);
-      Serial.print("\t");
-      Serial.print(ld);
-      Serial.print("+");
-      Serial.print(rd);
-      Serial.print("/2=");
-      Serial.print(avd);
-      Serial.print("\t""\t");
-      Serial.print("dvert="); 
-      Serial.println(dvert);
+//Serial.print(lt);                           // For Tuning LDR only
+//Serial.print("+");
+//Serial.print(rt);
+//Serial.print("/2=");
+//Serial.print(avt);
+//Serial.print("\t");
+//Serial.print(ld);
+//Serial.print("+");
+//Serial.print(rd);
+//Serial.print("/2=");
+//Serial.print(avd);
+//Serial.print("\t""\t");
+//Serial.print("dvert="); 
+//Serial.println(dvert);
       
   if (buttonState3 == HIGH) {
       digitalWrite(ledcenter, LOW);           // led center OFF
@@ -133,10 +133,10 @@ void loop() {
                     digitalWrite(ledcenter, LOW);
                     ledforward();
                     forward();                // step motor forward
-                    Serial.print("dvert="); 
-                    Serial.print(dvert);
-                    Serial.print("\t");
-                    Serial.println("Forward");
+//                    Serial.print("dvert="); 
+//                    Serial.print(dvert);
+//                    Serial.print("\t");
+//                    Serial.println("Forward");
                 }
             }
         }
@@ -147,10 +147,10 @@ void loop() {
                   digitalWrite(ledcenter, LOW);
                   ledbackward();
                   backward();
-                  Serial.print("dvert="); 
-                  Serial.print(dvert);
-                  Serial.print("\t");
-                  Serial.println("Backward");
+//                  Serial.print("dvert="); 
+//                  Serial.print(dvert);
+//                  Serial.print("\t");
+//                  Serial.println("Backward");
               }
       }
       if(dvert >= -3 && dvert <= 3){          // led center ON, panel sejajar matahari

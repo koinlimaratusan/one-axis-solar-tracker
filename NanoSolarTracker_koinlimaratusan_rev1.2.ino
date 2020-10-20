@@ -125,7 +125,7 @@ void loop() {
       
   if (buttonState3 == HIGH) {
       digitalWrite(ledcenter, LOW);           // led center OFF
-      if(avt <= 900 && avd <= 900){           // jika nilai ldr lebih besar dari 900 kurleb pukul (17:50WIB) RTH
+      if(avt <= 900 || avd <= 900){           // jika nilai ldr lebih besar dari 900 kurleb pukul (17:50WIB) RTH
          if(-1*tol > dvert || dvert > tol){
             if(avt > avd){
               if(digitalRead(LLow)) {}

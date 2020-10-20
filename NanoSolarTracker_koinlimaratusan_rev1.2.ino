@@ -26,9 +26,9 @@ const int btnauto = 4;      // tombol Auto direction
 
 //####################################################### SILAKAN SESUAIKAN CONFIG ########################################################
 // DelayMotor | nilai 1 detik disesuaikan dengan actuator parabola, untuk actuator/motor lain silakan setting sendiri.                    #
-int Mdelay = 1000;                                                                                                                      //#
+int Mdelay = 1000;//                                                                                                                      #
 // Toleransi LDR, jika nilai LDR melewati angka tol atau -tol maka motor akan bergerak susai nilai dvert.                                 #
-int tol = 15;                                                                                                                           //#
+int tol = 15;//                                                                                                                           #
 // LDR Correction | board LDR ada miss dengan desain yg sebelumnya, samakan nilai sensor LDR sebelum dipasang disisi panel.               #
 int ltcor = 74;             // nilai 74 sudah dicek dan sesuai dengan board ldr, semakin tinggi nilai LDR akan berkurang                  #
 int rtcor = 0;              // semakin tinggi nilai LDR akan berkurang                                                                    #

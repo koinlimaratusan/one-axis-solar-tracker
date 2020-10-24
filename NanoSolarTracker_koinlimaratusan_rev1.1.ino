@@ -28,12 +28,8 @@ const int btnauto = 4;      // tombol Auto direction
 // DelayMotor | nilai 1 detik disesuaikan dengan actuator parabola, untuk actuator/motor lain silakan setting sendiri.                    #
 int Mdelay = 1000;                                                                                                                      //#
 // Toleransi LDR, jika nilai LDR melewati angka tol atau -tol maka motor akan bergerak susai nilai dvert.                                 #
-int tol = 15;                                                                                                                           //#
-// LDR Correction | board LDR ada miss dengan desain yg sebelumnya, samakan nilai sensor LDR sebelum dipasang disisi panel.               #
-int ltcor = 74;             // nilai 74 sudah dicek dan sesuai dengan board ldr, semakin tinggi nilai LDR akan berkurang                  #
-int rtcor = 0;              // semakin tinggi nilai LDR akan berkurang                                                                    #
-int ldcor = 0;              // semakin tinggi nilai LDR akan berkurang                                                                    #
-int rdcor = 0;              // semakin tinggi nilai LDR akan berkurang                                                                    #  
+int tol = 5;                                                                                                                           //#
+int cor = 0;                                                                                                                           //#
 //####################################################### SILAKAN SESUAIKAN CONFIG ########################################################                                                                                                                                            
 
 void forward() {            // function motor forward, karena motor dc actuator tdk ada encoder terpaksa runningnya di jeda 1 detik :))
@@ -97,10 +93,10 @@ void setup() {
 
 void loop() {
   
-  int lt = (1023-ltcor)-analogRead(ldrlt);    // top left
-  int rt = (1023-rtcor)-analogRead(ldrrt);    // top right 
-  int ld = (1023-ldcor)-analogRead(ldrld);    // down left
-  int rd = (1023-rdcor)-analogRead(ldrrd);    // down right   
+  int lt = analogRead(ldrlt)-cor;             // top left
+  int rt = analogRead(ldrrt);                 // top right 
+  int ld = analogRead(ldrld);                 // down left
+  int rd = analogRead(ldrrd);                 // down right   
   int avt = (lt + rt) / 2;                    // average top value
   int avd = (ld + rd) / 2;                    // average down value
   int dvert = avt - avd;                      // check the top/down diference
@@ -125,6 +121,7 @@ void loop() {
       
   if (buttonState3 == HIGH) {
       digitalWrite(ledcenter, LOW);          // led center OFF
+      if(lt < 1000 && rt < 1000 && ld < 1000 && rd < 1000){
         if (-1*tol > dvert || dvert > tol){
           if (avt > avd){
             if (digitalRead(LLow)) {}
@@ -135,7 +132,7 @@ void loop() {
                   Serial.print("dvert="); 
                   Serial.print(dvert);
                   Serial.print("\t");
-                  Serial.println("Forward");
+                  Serial.println("AutoForward");
              }
           }
           else if (avt < avd){
@@ -147,16 +144,25 @@ void loop() {
                   Serial.print("dvert="); 
                   Serial.print(dvert);
                   Serial.print("\t");
-                  Serial.println("Backward");
+                  Serial.println("AutoBackward");
             }
           }
         }
-        if (dvert >= -5 && dvert <= 5){  // led center ON, panel sejajar matahari
+        if (dvert >= -3 && dvert <= 3){  // led center ON, panel sejajar matahari
             digitalWrite(ledcenter, HIGH);
         }
         else{
              digitalWrite(ledcenter, LOW);    
         }
+  }
+  else
+  if (digitalRead(LHigh)) {}
+     else {
+          ledbackward();    
+          backward();
+          Serial.println("AutoHome");
+         }
+  delay(1000);
   }
   else{
       digitalWrite(ledcenter, HIGH);        // led center ON
@@ -165,6 +171,7 @@ void loop() {
           else {
                 ledforward();
                 forward();
+                Serial.println("ManForward");
           }
       }
       if (buttonState2 == HIGH){            // fungsi tombol backward
@@ -172,15 +179,18 @@ void loop() {
           else {
                 ledbackward();    
                 backward();
+                Serial.println("ManBackward");
          }
       }
   }   
 
   if (digitalRead(LHigh)){                  // limit high/top
       ledlimit1();                          // led limit home menyala
+      Serial.println("home");
   }
   
   if (digitalRead(LLow)){                   // limit low/home 
       ledlimit2();                          // led limit end menyala
+      Serial.println("end");
   }
 }
